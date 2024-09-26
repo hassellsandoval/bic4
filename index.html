@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BICIAPP 2.0 - Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .form-section, .user-list-section {
+      width: 40%;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-section h2, .user-list-section h2 {
+      font-weight: bold;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .form-section h2 {
+      color: #28a745;
+    }
+
+    .user-list-section h2 {
+      color: #007bff;
+    }
+
+    .form-control {
+      border-radius: 20px;
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    .btn-custom {
+      border-radius: 20px;
+      padding: 10px 20px;
+      font-weight: bold;
+      font-size: 16px;
+      color: white;
+      border: none;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    #saveBtn {
+      background-color: #28a745;
+    }
+    
+    #saveBtn:hover {
+      background-color: #218838;
+      transform: scale(1.05);
+    }
+
+    #updateBtn {
+      background-color: #ffc107;
+    }
+
+    #updateBtn:hover {
+      background-color: #e0a800;
+      transform: scale(1.05);
+    }
+
+    #retrieveBtn {
+      background-color: #17a2b8;
+    }
+
+    #retrieveBtn:hover {
+      background-color: #138496;
+      transform: scale(1.05);
+    }
+
+    #message {
+      margin-top: 20px;
+      color: red; /* Color para mensajes de error */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-section">
+    <h2>REGISTRO DE USUARIOS</h2>
+    <form id="userForm">
+      <input id="nombres" type="text" class="form-control" placeholder="Nombres" required>
+      <input id="password" type="password" class="form-control" placeholder="Contraseña" required>
+      <input id="email" type="email" class="form-control" placeholder="Email" required>
+      <input id="direccion" type="text" class="form-control" placeholder="Dirección" required>
+      <input id="barrio" type="text" class="form-control" placeholder="Barrio" required>
+      <input id="ciudad" type="text" class="form-control" placeholder="Ciudad" required>
+      <input id="departamento" type="text" class="form-control" placeholder="Departamento" required>
+      <input id="estrato" type="text" class="form-control" placeholder="Estrato" required>
+      
+      <a href="inicio_secion.html" type="submit" id="saveBtn" class="btn-custom">Registrar</a>
+      <button type="button" id="updateBtn" class="btn-custom">Actualizar</button>
+      <button type="button" id="retrieveBtn" class="btn-custom">Consultar</button>
+    </form>
+    <div id="message"></div>
+  </div>
+
+  <div class="user-list-section">
+    <h2>Lista de Usuarios Registrados</h2>
+    <ul id="userList" class="list-group">
+      <!-- Los usuarios registrados se mostrarán aquí -->
+    </ul>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+  <script>
+    const form = document.getElementById('userForm');
+    const saveBtn = document.getElementById('saveBtn');
+    const updateBtn = document.getElementById('updateBtn');
+    const retrieveBtn = document.getElementById('retrieveBtn');
+    const messageDiv = document.getElementById('message');
+    const userList = document.getElementById('userList');
+
+    function showMessage(message, isError = false) {
+        messageDiv.textContent = message;
+        messageDiv.style.color = isError ? 'red' : 'green'; // Cambia el color según el tipo de mensaje
+    }
+
+    function getFormData() {
+        return {
+            nombres: document.getElementById('nombres').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+            barrio: document.getElementById('barrio').value,
+            ciudad: document.getElementById('ciudad').value,
+            departamento: document.getElementById('departamento').value,
+            direccion: document.getElementById('direccion').value,
+            estrato: document.getElementById('estrato').value,
+        };
+    }
+
+    function setFormData(data) {
+        document.getElementById('nombres').value = data.nombres || '';
+        document.getElementById('email').value = data.email || '';
+        document.getElementById('password').value = data.password || '';
+        document.getElementById('barrio').value = data.barrio || '';
+        document.getElementById('ciudad').value = data.ciudad || '';
+        document.getElementById('departamento').value = data.departamento || '';
+        document.getElementById('direccion').value = data.direccion || '';
+        document.getElementById('estrato').value = data.estrato || '';
+    }
+
+    saveBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const data = getFormData();
+        try {
+            const response = await fetch('https://example.com/api/register', { // Cambia esta URL por la real
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            if (response.ok) {
+                showMessage('Datos guardados exitosamente');
+                document.getElementById('userForm').reset(); // Limpiar el formulario
+            } else {
+                showMessage('Error al guardar los datos', true);
+            }
+        } catch (error) {
+            showMessage('Error de conexión', true);
+        }
+    });
+
+    updateBtn.addEventListener('click', async () => {
+        const data = getFormData();
+        try {
+            const response = await fetch('https://example.com/api/user', { // Cambia esta URL por la real
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            if (response.ok) {
+                showMessage('Datos actualizados exitosamente');
+            } else {
+                showMessage('Error al actualizar los datos', true);
+            }
+        } catch (error) {
+            showMessage('Error de conexión', true);
+        }
+    });
+
+    retrieveBtn.addEventListener('click', async () => {
+        try {
+            const response = await fetch('https://example.com/api/user'); // Cambia esta URL por la real
+            if (response.ok) {
+                const data = await response.json();
+                setFormData(data);
+                showMessage('Datos recuperados exitosamente');
+            } else {
+                showMessage('Error al recuperar los datos', true);
+            }
+        } catch (error) {
+            showMessage('Error de conexión', true);
+        }
+    });
+  </script>
+</body>
+</html>

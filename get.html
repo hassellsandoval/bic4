@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    ,<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="app.js"></script>
+    <title>Registro de usuarios</title>
+</head>
+<body style="background-color: rgb(172, 197, 230);">
+    <div id="main" class="container">
+        <div id="marco" class="container my-5 text-center">
+            <h1>Registro</h1>
+            <table class="table table-stripped table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">nombres</th>
+                    <th scope="col">email</th>
+                    <th scope="col">contraseña</th>
+                    <th scope="col">direccion </th>
+                    <th scope="col">barrio</th>
+                    <th scope="col">ciudad</th>
+                    <th scope="col">departamento</th>
+                    <th scope="col">estrato</th>
+                  </tr>
+                </thead>
+                <tbody id="data">
+                </tbody>
+              </table>
+              <button type="button" class="btn btn-info" onclick="location.href = 'add.html'">Agregar</button>
+        </div>
+        <script>consulta_general();</script>
+    </div>
+</body>
+<script>
+    function consulta_general(){
+        let url = "http://127.0.0.1:5000/users/usuarios";
+        fetch(url)
+        .then( response => response.json())
+        .then( data => visualizar(data) )
+        .catch( error => console.log(error) )
+        const visualizar = (data) => {
+        console.log(data)
+        let b = ""
+        for (var i = 0; i < data.baul.length; i++) {
+        //console.log(i,data.baul[i].Plataforma)
+        //console.log(i,data.baul[i].usuario)
+        //console.log(i,data.baul[i].clave)
+        b+=`<tr><td>${data.baul[i].id_baul}</td><td>${data.baul[i].nombres}</td><td>${data.baul[i].email}</td><td>${data.baul[i].password}</td><td>${data.baul[i].direccion}</td><td>${data.baul[i].barrio}</td><td>${data.baul[i].ciudad}</td><td>${data.baul[i].departamento}</td><td>${data.baul[i].estrato}</td><td><button type='button' class="btn btn-
+        info" onclick="location.href = 'edit.html?variable1=${data.baul[i].id_baul}'"> <img src='imagenes/edit.png' height ='30' width='30'/></button>
+        <button type='button' class="btn btn-warning" onclick="eliminar(${data.baul[i].id_baul})"> <img src='imagenes/delete.png' height ='30' width='30'/></button></tr>`}
+        document.getElementById('data').innerHTML = b }}
+</script>
+</html>

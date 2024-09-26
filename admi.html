@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BICIAPP 2.0 - Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    
+    .dashboard-container {
+      border: 2px solid #007bff;
+      padding: 20px;
+      text-align: center;
+      background-color: white;
+      border-radius: 10px;
+      width: 70%;
+    }
+
+    .dashboard-header {
+      background-color: #28a745;
+      color: white;
+      padding: 15px;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .option-box {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #f1f1f1;
+    }
+
+    .btn-enter {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .btn-enter:hover {
+      background-color: #218838;
+    }
+
+    .options-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .option-box h4 {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Contenedor Principal del Dashboard -->
+  <div class="dashboard-container">
+    <!-- Header del Dashboard -->
+    <div class="dashboard-header">
+      BICIAPP 2.0 - DASHBOARD
+    </div>
+
+    <!-- Opciones del Dashboard -->
+    <div class="options-row">
+      <!-- Opción 1: Administrar Bicicletas -->
+      <div class="option-box">
+        <h4>Administrar Bicicletas</h4>
+        <button class="btn-enter">> Entrar</button>
+      </div>
+
+      <!-- Opción 2: Publicar ciclo paseo -->
+      <div class="option-box">
+        <h4>Publicar ciclo paseo</h4>
+        <button class="btn-enter">> Entrar</button>
+      </div>
+
+      <!-- Opción 3: Mapa interactivo -->
+      <div class="option-box">
+        <h4>Mapa interactivo</h4>
+        <button class="btn-enter">> Entrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
